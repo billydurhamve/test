@@ -3,138 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Purchase Form</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Employee Login</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-  <!-- Left Panel -->
-  <div class="left-panel">
-    <h1>🛒 Employee Purchase Form</h1>
-    <p>Record your purchases efficiently. Fill out the form to log your transactions to the company database.</p>
-    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910760.png" alt="Purchase Icon" class="side-image">
-  </div>
-
-  <!-- Right Panel / Form -->
-  <div class="right-panel">
-    <form id="purchaseForm">
-      
-      <!-- Live Preview Box -->
-      <div class="preview-box">
-        <h2>Live Preview</h2>
-        <pre id="livePreview">{}</pre>
-      </div>
-
-      <!-- Name -->
-      <div class="form-group floating">
-        <input type="text" name="name" id="name" placeholder=" " required>
-        <label for="name">Full Name</label>
-        <span class="tooltip">Enter your full legal name</span>
-      </div>
-
-      <!-- Department -->
-      <div class="form-group floating">
-        <select name="department" id="department" required>
-          <option value="">Select Department</option>
-          <option>Marketing</option>
-          <option>Finance & Accounting</option>
-          <option>Human Resources</option>
-          <option>Operations</option>
-          <option>Sales</option>
-          <option>IT / Web Design</option>
-        </select>
-        <label for="department">Department</label>
-      </div>
-
-      <!-- Email -->
-      <div class="form-group floating">
-        <input type="email" name="email" id="email" placeholder=" " required>
-        <label for="email">Email</label>
-      </div>
-
-      <!-- Vendor -->
-      <div class="form-group floating">
-        <input type="text" name="vendor" id="vendor" placeholder=" " required>
-        <label for="vendor">Vendor Name</label>
-      </div>
-
-      <!-- Product -->
-      <div class="form-group floating">
-        <input type="text" name="product" id="product" placeholder=" " required>
-        <label for="product">Product(s) / Service(s)</label>
-      </div>
-
-      <!-- Amount & Date -->
-      <div class="form-group two-column">
-        <div class="floating">
-          <input type="number" step="0.01" name="amount" id="amount" placeholder=" " required>
-          <label for="amount">Amount ($)</label>
-        </div>
-        <div class="floating">
-          <input type="date" name="date" id="date" placeholder=" " required>
-          <label for="date">Date of Purchase</label>
-        </div>
-      </div>
-
-      <!-- Payment Type -->
-      <div class="form-group floating">
-        <select name="payment" id="payment" required>
-          <option value="">Select Payment</option>
-          <option>VE Bank Debit Card</option>
-          <option>Trade / Exchange</option>
-          <option>Purchase Order</option>
-          <option>Other</option>
-        </select>
-        <label for="payment">Payment Type</label>
-      </div>
-
-      <!-- Proof of Purchase -->
-      <div class="form-group floating">
-        <input type="url" name="file" id="file" placeholder=" ">
-        <label for="file">Proof of Purchase (URL)</label>
-      </div>
-
-      <!-- Purchases 5+ -->
-      <div class="form-group floating">
-        <select name="purchases5" id="purchases5" required>
-          <option value="">Select</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-        <label for="purchases5">Made at least 5 VE purchases this period?</label>
-      </div>
-
-      <!-- Notes -->
-      <div class="form-group floating">
-        <textarea name="notes" id="notes" placeholder=" "></textarea>
-        <label for="notes">Notes / Comments</label>
-      </div>
-
-      <!-- Terms -->
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="terms" name="terms" required>
-        <label for="terms">I confirm all information is accurate</label>
-      </div>
-
-      <!-- Submit -->
-      <button type="submit">Submit Purchase</button>
-    </form>
-  </div>
+<div class="login-container">
+  <h1>Employee Login</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p id="errorMsg" style="color:red;"></p>
 </div>
 
-<!-- Success Screen -->
-<div id="successScreen" class="hidden">
-  <canvas id="confettiCanvas"></canvas>
-  <div class="success-content">
-    <h2>✅ Submission Successful!</h2>
-    <p>Your purchase has been securely recorded.</p>
-    <button onclick="closeSuccess()">Submit Another</button>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
 <script src="script.js"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const response = await fetch('users.json');
+  const users = await response.json();
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if(user){
+    sessionStorage.setItem('user', JSON.stringify(user));
+    window.location.href = 'dashboard.html';
+  } else {
+    document.getElementById('errorMsg').innerText = 'Invalid credentials!';
+  }
+});
+</script>
+
 </body>
 </html>
