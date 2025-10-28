@@ -7,59 +7,33 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
+<div class="admin-container">
   <h1>Admin Dashboard</h1>
-
-  <h2>Add New User</h2>
-  <form id="addUserForm">
-    <input type="text" id="newUsername" placeholder="Username" required>
-    <input type="password" id="newPassword" placeholder="Password" required>
-    <select id="newRole" required>
-      <option value="">Select Role</option>
+  <div class="add-user-form">
+    <h2>Add New User</h2>
+    <input type="text" id="newUsername" placeholder="Username">
+    <input type="password" id="newPassword" placeholder="Password">
+    <select id="role">
       <option value="employee">Employee</option>
       <option value="admin">Admin</option>
     </select>
-    <button type="submit">Add User</button>
-  </form>
-
+    <button onclick="addUser()">Add User</button>
+  </div>
   <h2>All Users</h2>
-  <div id="userList" class="user-list"></div>
-
-  <button onclick="logout()" class="logout-btn">Logout</button>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Assigned Forms</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
-
-<script>
-async function fetchUsers(){
-  const res = await fetch('/users');
-  const users = await res.json();
-  const userList = document.getElementById('userList');
-  userList.innerHTML = '';
-  users.forEach(u => {
-    const div = document.createElement('div');
-    div.classList.add('user-card');
-    div.innerHTML = `<strong>${u.username}</strong> (${u.role})<br>Forms: ${u.forms ? u.forms.map(f=>f.name).join(', ') : 'None'}`;
-    userList.appendChild(div);
-  });
-}
-
-document.getElementById('addUserForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const username = document.getElementById('newUsername').value;
-  const password = document.getElementById('newPassword').value;
-  const role = document.getElementById('newRole').value;
-
-  const res = await fetch('/addUser', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username, password, role})
-  });
-
-  if(res.ok){
-    alert('User added');
-    fetchUsers();
-  } else {
-    alert(await res.text());
+<script src="script.js"></script>
+</body>
+</html>
   }
 });
 
