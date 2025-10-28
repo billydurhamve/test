@@ -6,7 +6,7 @@ let users = [
     ] }
 ];
 
-// LOGIN FUNCTIONALITY
+// ------------------- LOGIN FUNCTIONALITY -------------------
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", (e) => {
@@ -27,7 +27,7 @@ if (loginForm) {
   });
 }
 
-// ADMIN PAGE
+// ------------------- ADMIN PAGE -------------------
 function addUser() {
   const newUsername = document.getElementById("newUsername").value;
   const newPassword = document.getElementById("newPassword").value;
@@ -38,6 +38,35 @@ function addUser() {
   renderUsers();
 }
 
+// Populate user dropdown for assigning forms
+function populateUserDropdown() {
+  const select = document.getElementById("userSelect");
+  select.innerHTML = '<option value="">Select User</option>';
+  users.filter(u => u.role === "employee").forEach(u => {
+    const option = document.createElement("option");
+    option.value = u.username;
+    option.text = u.username;
+    select.appendChild(option);
+  });
+}
+
+// Assign form to user
+function assignForm() {
+  const username = document.getElementById("userSelect").value;
+  const formName = document.getElementById("formName").value;
+  const formURL = document.getElementById("formURL").value;
+  if (!username || !formName || !formURL) return alert("Fill all fields!");
+  
+  const user = users.find(u => u.username === username);
+  user.forms.push({ name: formName, url: formURL });
+  
+  alert(`Form "${formName}" assigned to ${username}`);
+  renderUsers();
+  document.getElementById("formName").value = "";
+  document.getElementById("formURL").value = "";
+}
+
+// Render users table
 function renderUsers() {
   const tbody = document.querySelector("#usersTable tbody");
   tbody.innerHTML = "";
@@ -46,13 +75,14 @@ function renderUsers() {
     tr.innerHTML = `<td>${user.username}</td><td>${user.role}</td><td>${user.forms.map(f => f.name).join(", ")}</td>`;
     tbody.appendChild(tr);
   });
+  populateUserDropdown();
 }
 
 if (document.querySelector("#usersTable")) {
   renderUsers();
 }
 
-// EMPLOYEE DASHBOARD
+// ------------------- EMPLOYEE DASHBOARD -------------------
 if (document.getElementById("employeeName")) {
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   document.getElementById("employeeName").innerText = currentUser.username;
@@ -60,6 +90,19 @@ if (document.getElementById("employeeName")) {
   if (currentUser.forms.length === 0) formsList.innerHTML = "<p>No forms assigned yet.</p>";
   currentUser.forms.forEach(f => {
     const btn = document.createElement("button");
+    btn.innerText = f.name;
+    btn.onclick = () => window.open(f.url, "_blank");
+    btn.style.display = "block";
+    btn.style.margin = "10px 0";
+    formsList.appendChild(btn);
+  });
+}
+
+// ------------------- LOGOUT -------------------
+function logout() {
+  sessionStorage.removeItem("currentUser");
+  window.location.href = "index.html";
+}
     btn.innerText = f.name;
     btn.onclick = () => window.open(f.url, "_blank");
     btn.style.display = "block";
