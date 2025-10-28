@@ -1,16 +1,19 @@
 [
   {
-    "username": "employee1",
-    "password": "password123", 
-    "name": "John Doe",
-    "email": "john@example.com",
-    "department": "Sales"
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin"
   },
   {
-    "username": "employee2",
-    "password": "password456",
-    "name": "Jane Smith",
-    "email": "jane@example.com",
-    "department": "Marketing"
+    "username": "employee1",
+    "password": "password123",
+    "role": "employee",
+    "forms": [
+      {
+        "name": "Employee Purchase Form",
+        "link": "https://script.google.com/macros/s/AKfycbwtMxTjHv8vDNfZeeoDl92i2lFeEivlvmZwIjkuxUBylhjIzInYN6gyXqS2qwAQ9aCLCQ/exec",
+        "status": "pending"
+      }
+    ]
   }
 ]
