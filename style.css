@@ -1,92 +1,82 @@
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #001f3f, #000);
-  color: #fff;
+/* General styles */
+body, html {
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #0d1b2a, #1b263b);
+  color: #fff;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.container {
-  background-color: rgba(20, 20, 40, 0.95);
+/* Login container */
+.login-container {
+  max-width: 400px;
+  margin: 10% auto;
   padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  width: 400px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
   text-align: center;
 }
 
-h1 {
+.login-container h1 {
   margin-bottom: 20px;
+  font-size: 2em;
 }
 
-input, select, textarea, button {
+.login-container input {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  margin: 10px 0;
   border: none;
-  font-size: 14px;
+  border-radius: 8px;
 }
 
-input, select, textarea {
-  background-color: #111;
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #ff7f50;
   color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background: #ff6333;
+}
+
+.error-msg {
+  color: #ff5555;
+}
+
+/* Admin and dashboard containers */
+.admin-container, .dashboard-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+h1, h2 {
+  color: #ffb347;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+table th, table td {
+  border: 1px solid #444;
+  padding: 12px;
+  text-align: left;
+  border-radius: 6px;
 }
 
 button {
-  background-color: #00bfff;
-  color: #000;
-  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
-
-button:hover {
-  background-color: #009acd;
-}
-
-.logout-btn {
-  background-color: #ff4500;
-  margin-top: 20px;
-}
-
-.logout-btn:hover {
-  background-color: #e03e00;
-}
-
-#errorMsg {
-  color: #ff4500;
-  margin-top: 10px;
-}
-
-.user-list {
-  text-align: left;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.user-card {
-  background-color: #111;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-  padding: 20px;
-}
-#successScreen.hidden { display: none; }
-#successScreen button {
-  background: #ff9a9e;
-  padding: 12px 30px;
-  margin-top: 25px;
-  font-size: 18px;
-  border-radius: 12px;
-  color: #fff;
-}
-#successScreen button:hover { transform: scale(1.05); background: #fad0c4; }
-
-/* Confetti effect placeholder */
-.confetti { display: none; }
