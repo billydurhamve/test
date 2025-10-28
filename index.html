@@ -18,14 +18,14 @@
 
   <div class="form-right">
     <form id="purchaseForm">
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" name="name" placeholder="John Doe" required>
+      <div class="form-group floating">
+        <input type="text" name="name" id="name" placeholder=" " required>
+        <label for="name">Full Name</label>
+        <span class="tooltip">Enter your full legal name</span>
       </div>
 
-      <div class="form-group">
-        <label>Department</label>
-        <select name="department" required>
+      <div class="form-group floating">
+        <select name="department" id="department" required>
           <option value="">Select Department</option>
           <option>Marketing</option>
           <option>Finance & Accounting</option>
@@ -34,32 +34,129 @@
           <option>Sales</option>
           <option>IT / Web Design</option>
         </select>
+        <label for="department">Department</label>
+        <span class="tooltip">Which department are you in?</span>
       </div>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" placeholder="you@example.com" required>
+      <div class="form-group floating">
+        <input type="email" name="email" id="email" placeholder=" " required>
+        <label for="email">Email</label>
+        <span class="tooltip">We will send confirmation to this email</span>
       </div>
 
-      <div class="form-group">
-        <label>Vendor Name</label>
-        <input type="text" name="vendor" placeholder="Vendor Ltd." required>
+      <div class="form-group floating">
+        <input type="text" name="vendor" id="vendor" placeholder=" " required>
+        <label for="vendor">Vendor Name</label>
       </div>
 
-      <div class="form-group">
-        <label>Product(s) / Service(s)</label>
-        <input type="text" name="product" placeholder="Office chairs, software license" required>
+      <div class="form-group floating">
+        <input type="text" name="product" id="product" placeholder=" " required>
+        <label for="product">Product(s) / Service(s)</label>
       </div>
 
       <div class="form-group two-column">
-        <div>
-          <label>Amount ($)</label>
-          <input type="number" step="0.01" name="amount" placeholder="0.00" required>
+        <div class="floating">
+          <input type="number" step="0.01" name="amount" id="amount" placeholder=" " required>
+          <label for="amount">Amount ($)</label>
         </div>
-        <div>
-          <label>Date of Purchase</label>
-          <input type="date" name="date" required>
+        <div class="floating">
+          <input type="date" name="date" id="date" placeholder=" " required>
+          <label for="date">Date of Purchase</label>
         </div>
+      </div>
+
+      <div class="form-group floating">
+        <select name="payment" id="payment" required>
+          <option value="">Select</option>
+          <option>VE Bank Debit Card</option>
+          <option>Trade / Exchange</option>
+          <option>Purchase Order</option>
+          <option>Other</option>
+        </select>
+        <label for="payment">Payment Type</label>
+      </div>
+
+      <div class="form-group floating">
+        <input type="url" name="file" id="file" placeholder=" ">
+        <label for="file">Proof of Purchase (URL)</label>
+      </div>
+
+      <div class="form-group floating">
+        <select name="purchases5" id="purchases5" required>
+          <option value="">Select</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+        <label for="purchases5">Made at least 5 VE purchases this period?</label>
+      </div>
+
+      <div class="form-group floating">
+        <textarea name="notes" id="notes" placeholder=" "></textarea>
+        <label for="notes">Notes / Comments</label>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I confirm all information is accurate</label>
+      </div>
+
+      <button type="submit">Submit Purchase</button>
+    </form>
+  </div>
+</div>
+
+<!-- Success Screen with Confetti -->
+<div id="successScreen" class="hidden">
+  <canvas id="confettiCanvas"></canvas>
+  <div class="success-content">
+    <h2>✅ Submission Successful!</h2>
+    <p>Your purchase has been securely recorded.</p>
+    <button onclick="closeSuccess()">Submit Another</button>
+  </div>
+</div>
+
+<script src="confetti.min.js"></script>
+<script>
+const form = document.getElementById("purchaseForm");
+const successScreen = document.getElementById("successScreen");
+const confettiCanvas = document.getElementById("confettiCanvas");
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtMxTjHv8vDNfZeeoDl92i2lFeEivlvmZwIjkuxUBylhjIzInYN6gyXqS2qwAQ9aCLCQ/exec";
+
+// Initialize confetti
+const confettiSettings = { target: confettiCanvas, max: 200, size: 2, animate: true, props: ['circle','square','triangle'], colors:[[255,154,158],[250,208,196],[255,255,255]] };
+const confetti = new ConfettiGenerator(confettiSettings);
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    await fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    form.style.display = "none";
+    successScreen.classList.remove("hidden");
+    confetti.render();
+  } catch (error) {
+    alert("Error submitting form. Please try again.");
+    console.error(error);
+  }
+});
+
+function closeSuccess() {
+  successScreen.classList.add("hidden");
+  form.reset();
+  form.style.display = "block";
+  confetti.clear();
+}
+</script>
+
+</body>
+</html>
       </div>
 
       <div class="form-group">
