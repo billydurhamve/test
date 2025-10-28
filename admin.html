@@ -9,6 +9,8 @@
 <body>
 <div class="admin-container">
   <h1>Admin Dashboard</h1>
+
+  <!-- Add New User -->
   <div class="add-user-form">
     <h2>Add New User</h2>
     <input type="text" id="newUsername" placeholder="Username">
@@ -19,6 +21,19 @@
     </select>
     <button onclick="addUser()">Add User</button>
   </div>
+
+  <!-- Assign Forms to Users -->
+  <div class="assign-form">
+    <h2>Assign Forms to Users</h2>
+    <select id="userSelect">
+      <option value="">Select User</option>
+    </select>
+    <input type="text" id="formName" placeholder="Form Name">
+    <input type="url" id="formURL" placeholder="Form URL">
+    <button onclick="assignForm()">Assign Form</button>
+  </div>
+
+  <!-- Users Table -->
   <h2>All Users</h2>
   <table id="usersTable">
     <thead>
@@ -31,19 +46,7 @@
     <tbody></tbody>
   </table>
 </div>
+
 <script src="script.js"></script>
-</body>
-</html>
-  }
-});
-
-fetchUsers();
-
-function logout(){
-  sessionStorage.clear();
-  window.location.href = 'index.html';
-}
-</script>
-
 </body>
 </html>
