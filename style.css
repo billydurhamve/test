@@ -1,0 +1,74 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background: #121212; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+
+.container {
+  max-width: 650px;
+  width: 100%;
+  background: #1e1e1e;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  animation: slideIn 0.8s ease forwards;
+}
+
+h1 { color: #00fff7; font-weight: 700; text-align: center; margin-bottom: 5px; }
+.subtext { font-size: 16px; color: #aaa; text-align: center; margin-bottom: 30px; }
+
+.form-group { margin-bottom: 20px; }
+label { display: block; font-weight: 600; margin-bottom: 8px; color: #eee; }
+input, select, textarea {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #2c2c2c;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+input:focus, select:focus, textarea:focus { border-color: #00fff7; outline: none; box-shadow: 0 0 10px rgba(0,255,247,0.3); }
+textarea { resize: none; min-height: 80px; }
+
+button {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(90deg, #00fff7, #00ff85);
+  color: #121212;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,255,247,0.5); }
+
+#successScreen {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  color: #00fff7;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 22px;
+  padding: 20px;
+  animation: fadeIn 0.5s ease forwards;
+}
+#successScreen.hidden { display: none; }
+#successScreen button {
+  background: #00ff85;
+  padding: 12px 30px;
+  margin-top: 25px;
+  font-size: 18px;
+  border-radius: 12px;
+  color: #121212;
+}
+#successScreen button:hover { transform: scale(1.05); background: #00fff7; }
+
+/* Animations */
+@keyframes slideIn { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
