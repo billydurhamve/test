@@ -1,22 +1,25 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #001f3f, #000000);
+  background: linear-gradient(to bottom, #001f3f, #000);
   color: #fff;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-container, .form-container, .dashboard-container {
-  background-color: rgba(20, 20, 40, 0.9);
+.container {
+  background-color: rgba(20, 20, 40, 0.95);
   padding: 40px;
   border-radius: 12px;
   width: 400px;
-  margin: 50px auto;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -55,11 +58,23 @@ button:hover {
   background-color: #e03e00;
 }
 
-textarea {
-  resize: vertical;
+#errorMsg {
+  color: #ff4500;
+  margin-top: 10px;
 }
-  text-align: center;
-  font-size: 22px;
+
+.user-list {
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-card {
+  background-color: #111;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
   padding: 20px;
 }
 #successScreen.hidden { display: none; }
