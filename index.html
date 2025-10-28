@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee Purchase Form - Dark Mode</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Purchase Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>💼 Employee Purchase Form</h1>
-    <p class="subtext">Submit your VE purchases securely.</p>
 
+<div class="form-wrapper">
+  <div class="form-left">
+    <h1>🛒 Employee Purchase Form</h1>
+    <p>Record your purchases for Virtual Enterprise efficiently.</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910760.png" alt="Purchase Icon" class="side-image">
+  </div>
+
+  <div class="form-right">
     <form id="purchaseForm">
       <div class="form-group">
         <label>Full Name</label>
@@ -46,14 +51,15 @@
         <input type="text" name="product" placeholder="Office chairs, software license" required>
       </div>
 
-      <div class="form-group">
-        <label>Amount ($)</label>
-        <input type="number" step="0.01" name="amount" placeholder="0.00" required>
-      </div>
-
-      <div class="form-group">
-        <label>Date of Purchase</label>
-        <input type="date" name="date" required>
+      <div class="form-group two-column">
+        <div>
+          <label>Amount ($)</label>
+          <input type="number" step="0.01" name="amount" placeholder="0.00" required>
+        </div>
+        <div>
+          <label>Date of Purchase</label>
+          <input type="date" name="date" required>
+        </div>
       </div>
 
       <div class="form-group">
@@ -89,45 +95,46 @@
       <button type="submit">Submit Purchase</button>
     </form>
   </div>
+</div>
 
-  <div id="successScreen" class="hidden">
-    <h2>✅ Submission Successful!</h2>
-    <p>Your purchase has been recorded securely.</p>
-    <button onclick="closeSuccess()">Submit Another</button>
-  </div>
+<div id="successScreen" class="hidden">
+  <div class="confetti"></div>
+  <h2>✅ Submission Successful!</h2>
+  <p>Your purchase has been securely recorded.</p>
+  <button onclick="closeSuccess()">Submit Another</button>
+</div>
 
-  <script>
-    const form = document.getElementById("purchaseForm");
-    const successScreen = document.getElementById("successScreen");
+<script>
+  const form = document.getElementById("purchaseForm");
+  const successScreen = document.getElementById("successScreen");
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtMxTjHv8vDNfZeeoDl92i2lFeEivlvmZwIjkuxUBylhjIzInYN6gyXqS2qwAQ9aCLCQ/exec";
 
-    // Google Apps Script Web App URL
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwtMxTjHv8vDNfZeeoDl92i2lFeEivlvmZwIjkuxUBylhjIzInYN6gyXqS2qwAQ9aCLCQ/exec";
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        await fetch(WEB_APP_URL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" },
-        });
-        form.style.display = "none";
-        successScreen.classList.remove("hidden");
-      } catch (error) {
-        alert("Error submitting form. Please try again.");
-        console.error(error);
-      }
-    });
-
-    function closeSuccess() {
-      successScreen.classList.add("hidden");
-      form.reset();
-      form.style.display = "block";
+    try {
+      await fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+      form.style.display = "none";
+      successScreen.classList.remove("hidden");
+    } catch (error) {
+      alert("Error submitting form. Please try again.");
+      console.error(error);
     }
-  </script>
+  });
+
+  function closeSuccess() {
+    successScreen.classList.add("hidden");
+    form.reset();
+    form.style.display = "block";
+  }
+</script>
+
 </body>
 </html>
